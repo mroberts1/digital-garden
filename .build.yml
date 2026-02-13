@@ -4,10 +4,12 @@ packages:
   - nodejs
   - npm
 oauth: pages.sr.ht/PAGES:RW
+secrets:
+  - 8bbfa982-22ea-4bf5-b058-6b25e72a93df
 environment:
   site: dokoissho.srht.site
 sources:
-  - https://git.sr.ht/~dokoissho/digital-garden#v4
+  - git@git.sr.ht:~dokoissho/digital-garden#v4
 tasks:
   - build: |
       cd digital-garden
