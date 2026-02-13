@@ -5,7 +5,7 @@ packages:
   - npm
 oauth: pages.sr.ht/PAGES:RW
 secrets:
-  - 8bbfa982-22ea-4bf5-b058-6b25e72a93df
+  - 67becea4-daae-4df9-8a7a-f2d83ac33b01
 environment:
   site: klara-sun.srht.site
 sources:
