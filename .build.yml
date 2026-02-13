@@ -7,7 +7,7 @@ oauth: pages.sr.ht/PAGES:RW
 secrets:
   - 8bbfa982-22ea-4bf5-b058-6b25e72a93df
 environment:
-  site: dokoissho.srht.site
+  site: klara-sun.srht.site
 sources:
   - git@git.sr.ht:~dokoissho/digital-garden#v4
 tasks:
