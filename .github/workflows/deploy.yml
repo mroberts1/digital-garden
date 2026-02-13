@@ -35,6 +35,9 @@ jobs:
           SRHT_TOKEN: ${{ secrets.SRHT_TOKEN }}
         run: |
           mkdir -p ~/.config/hut
-          echo "[sr.ht]" > ~/.config/hut/config
-          echo "oauth-token = $SRHT_TOKEN" >> ~/.config/hut/config
+          cat > ~/.config/hut/config <<EOF
+          instance "sr.ht" {
+            access-token "$SRHT_TOKEN"
+          }
+          EOF
           hut pages publish -d klara-sun.srht.site site.tar.gz
