@@ -1,0 +1,43 @@
+name: Build and Deploy to sr.ht Pages
+
+on:
+  push:
+    branches: [v4]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+      
+      - name: Install dependencies
+        run: npm install
+      
+      - name: Build site
+        run: npx quartz build
+      
+      - name: Package site
+        run: tar -C public -czf site.tar.gz .
+      
+      - name: Install hut
+        run: |
+          wget https://git.sr.ht/~emersion/hut/refs/download/v0.7.0/hut-v0.7.0-linux-amd64.tar.gz
+          tar -xzf hut-v0.7.0-linux-amd64.tar.gz
+          sudo mv hut /usr/local/bin/
+          
+      - name: Deploy to sr.ht Pages
+        env:
+          SRHT_TOKEN: ${{ secrets.SRHT_TOKEN }}
+        run: |
+          mkdir -p ~/.config/hut
+          echo "[sr.ht]" > ~/.config/hut/config
+          echo "oauth-token = $SRHT_TOKEN" >> ~/.config/hut/config
+          hut pages publish -d klara-sun.srht.site site.tar.gz
