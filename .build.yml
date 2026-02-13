@@ -13,7 +13,7 @@ sources:
 tasks:
   - build: |
       cd digital-garden
-      npm ci
+      npm install
       npx quartz build
   - package: |
       cd digital-garden
