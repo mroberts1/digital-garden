@@ -40,4 +40,4 @@ jobs:
             access-token "$SRHT_TOKEN"
           }
           EOF
-          hut pages publish -d klara-sun.srht.site site.tar.gz
+          hut pages publish -d dokoissho.srht.site site.tar.gz
