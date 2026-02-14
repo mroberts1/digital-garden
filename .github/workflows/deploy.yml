@@ -1,12 +1,20 @@
-name: Build and Deploy to sr.ht Pages
+name: Build and Deploy to GitHub Pages
 
 on:
   push:
     branches: [v4]
 
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     
     steps:
       - name: Checkout
@@ -24,20 +32,14 @@ jobs:
       - name: Build site
         run: npx quartz build
       
-      - name: Package site
-        run: tar -C public -czf site.tar.gz .
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
       
-      - name: Install hut
-        run: sudo apt-get update && sudo apt-get install -y hut
-          
-      - name: Deploy to sr.ht Pages
-        env:
-          SRHT_TOKEN: ${{ secrets.SRHT_TOKEN }}
-        run: |
-          mkdir -p ~/.config/hut
-          cat > ~/.config/hut/config <<EOF
-          instance "sr.ht" {
-            access-token "$SRHT_TOKEN"
-          }
-          EOF
-          hut pages publish -d dokoissho.srht.site site.tar.gz
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: 'public'
+      
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
